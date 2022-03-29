@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <title>Points on a map</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+      body { 
+        margin: 0; 
+        padding: 0; 
+      }
+      #map { 
+        position: absolute; 
+        top: 0; 
+        bottom: 0; 
+        width: 100%; 
+      }
+	  div {
+        cursor: auto;
+		}
+    </style>
+  </head>
+  <body>
+    <div id='map'></div>
+    <script>
+    // The value for 'accessToken' begins with 'pk...'
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic3JhdmFudGhpLW0iLCJhIjoiY2t4c29ocmplMTU4NjJ1bXZsZ3VxNmJvciJ9.fd68TkQDj0yMujir38PotQ';
+    const map = new mapboxgl.Map({
+      container: 'map',
+      // Replace YOUR_STYLE_URL with your style URL.
+      style: 'mapbox://styles/sravanthi-m/cl1c13e81002t14qqddjuz9vb', 
+      center: [77.0734 ,31.8048],
+      zoom: 5,
+	  dragPan: false,
+	  bounds:[73.418945,30.373954, 80.371443,33.079329],
+	  minZoom:4,
+	  maxZoom:9
+	  
+    });
+
+    /* 
+	Add an event listener that runs
+	when a user clicks on the map element.
+	*/
+	map.on('click', (event) => {
+	// If the user clicked on one of your markers, get its information.
+	const features = map.queryRenderedFeatures(event.point, {
+    layers: ['treeplantinghp'] // replace with your layer name
+	});
+	if (!features.length) {
+    return;
+	}
+	const feature = features[0];
+
+  /* 
+    Create a popup, specify its options 
+    and properties, and add it to the map.
+  */
+	const popup = new mapboxgl.Popup({ offset: [0, -15] })
+	.setLngLat(feature.geometry.coordinates)
+	.setHTML(
+    `<label>Count: </label><h>${feature.properties.NUMBER_TRE}</h><br>
+	<label>Mortality% : </label><h>${feature.properties.Mortality_}</h>`
+  )
+  .addTo(map);
+});
+	// Add zoom and rotation controls to the map.
+	map.addControl(new mapboxgl.NavigationControl());
+    </script>
+  </body>
+</html>
+
+sravanthi-m.cl1c0vbkw06c527mdu4p7s4j8-0276p
