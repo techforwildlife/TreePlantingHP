@@ -86,12 +86,12 @@
       // Replace YOUR_STYLE_URL with your style URL.
       style: 'mapbox://styles/sravanthi-m/cl1c13e81002t14qqddjuz9vb', 
       center: [77.0734 ,31.8048],
-      zoom: 5,
+      zoom: 10,
 	  minZoom:3,
 	  maxZoom:12,
 	  bounds:[73.418945,30.373954, 80.371443,33.079329],
 	  dragPan: true,
-	  
+	  maxBounds: [73.418945,30.073954, 80.371443,33.979329]
     });
     map.on('load', () => {
 // make a pointer cursor
@@ -101,7 +101,7 @@ map.getCanvas().style.cursor = 'default';
 map.fitBounds([
 [73.418945,30.373954],
 [80.371443,33.079329]
-]);
+],{padding:50});
  
 // define layer names
 const layers = [
@@ -114,10 +114,10 @@ const layers = [
 ];
 const colors = [
 '#FFFFFF',
-'#4169e1',
-'#00FFFF',
-'#00FF00',
-'#FFFF00',
+'#31a354',
+'#addd8e',
+'#fec44f',
+'#d95f0e',
 '#FF0000'
 ];
  
@@ -158,8 +158,8 @@ legend.appendChild(item);
 	const popup = new mapboxgl.Popup({ offset: [0, -15] })
 	.setLngLat(feature.geometry.coordinates)
 	.setHTML(
-	/*<label>Count: </label><h>${feature.properties.NUMBER_TRE}</h><br>*/
-    `<label>Mortality% : </label><h>${feature.properties.Mortality_}</h>`
+    `<label style="color:black;font-family:Open Sans; font-size: 15px">Tree ID: </label style="color:black;font-family:Open Sans; font-size: 15px"><h>${feature.properties.FID}</h><br>
+    <label style="color:black;font-family:Open Sans; font-size: 15px">Mortality% : </label><h style="color:black;font-family:Open Sans; font-size: 15px">${feature.properties.Mortality_}</h>`
   )
   .addTo(map);
 });
@@ -168,6 +168,4 @@ legend.appendChild(item);
     </script>
   </body>
 </html>
-
-
 
